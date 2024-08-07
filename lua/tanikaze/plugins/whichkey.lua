@@ -18,6 +18,7 @@ return {
 			{ "<leader>ff", "<CMD> Telescope find_files <CR>", desc = "Find Files",                 mode = { "n" } },
 			{ "<leader>f:", "<CMD> Telescope commands <CR>",   desc = "List Commands",              mode = { "n" } },
 
+			{ "<F2>",       vim.lsp.buf.format,                desc = "Lsp Format",                 mode = { "n" } },
 			{ "<leader>rn", vim.lsp.buf.rename,                desc = "Lsp Rename",                 mode = { "n" } },
 			{ "<leader>ca", vim.lsp.buf.code_action,           desc = "Lsp Code Action",            mode = { "n" } },
 			{ "<leader>[d", vim.diagnostic.goto_next,          desc = "Go to Next Diagnostic",      mode = { "n" } },
