@@ -6,6 +6,7 @@ return {
 			{ "<C-e>",      "<cmd> BufferNext <cr>",           desc = "Go To Next Buffer" },
 			{ "<C-x>",      "<cmd> BufferClose <cr>",          desc = "Close Focused Buffer" },
 			{ "<C-q>",      "<cmd> BufferPrevious <cr>",       desc = "Go To Previous Buffer" },
+			{ "<C-X>",      "<cmd> BufferClose! <cr>",         desc = "Forse Close Focused Buffer" },
 
 			{ "<leader>e",  "<cmd> Neotree focus <cr>",        desc = "Neotree Focus" },
 
