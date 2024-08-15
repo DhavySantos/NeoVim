@@ -1,12 +1,13 @@
 return {
 	"hrsh7th/nvim-cmp",
 	dependencies = {
-		"hrsh7th/cmp-path",
 		"L3MON4D3/LuaSnip",
-		"jcha0713/cmp-tw2css",
-		"onsails/lspkind.nvim",
+		"hrsh7th/cmp-path",
+		"hrsh7th/cmp-vsnip",
+		"hrsh7th/vim-vsnip",
+		"hrsh7th/cmp-buffer",
 		"hrsh7th/cmp-nvim-lsp",
-		"saadparwaiz1/cmp_luasnip",
+		"onsails/lspkind.nvim",
 	},
 
 	config = function()
@@ -50,6 +51,7 @@ return {
 			sources = cmp.config.sources({
 				{ name = "cmp-tw2css" },
 				{ name = "nvim_lsp" },
+				{ name = "buffer" },
 				{ name = "path" },
 			}),
 
