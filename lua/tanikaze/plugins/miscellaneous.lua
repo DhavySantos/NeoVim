@@ -26,6 +26,11 @@ return {
 		"folke/neodev.nvim",
 		config = true,
 	},
+	{
+		"NvChad/nvim-colorizer.lua",
+		event = { "BufReadPre", "BufNewFile" },
+		config = true,
+	},
 	{ "mrjones2014/smart-splits.nvim" },
 	{ "mg979/vim-visual-multi" },
 };
