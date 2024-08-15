@@ -37,5 +37,9 @@ return {
 
 			return a.type < b.type
 		end,
-	}
+	},
+	config = function(_, opts)
+		opts.nesting_rules = require("tanikaze.core.nesting");
+		require("neo-tree").setup(opts);
+	end
 }
