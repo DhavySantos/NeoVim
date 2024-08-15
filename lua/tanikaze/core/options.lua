@@ -13,6 +13,7 @@ vim.opt.pumheight = 10;
 vim.opt.cmdheight = 0;
 vim.opt.tabstop = 2;
 
+vim.opt.shell = "zsh";
 vim.diagnostic.config({
 	virtual_text = true,
 	underline = true,
