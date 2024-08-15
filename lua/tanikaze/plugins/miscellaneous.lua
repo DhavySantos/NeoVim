@@ -31,6 +31,10 @@ return {
 		event = { "BufReadPre", "BufNewFile" },
 		config = true,
 	},
+	{
+		"akinsho/toggleterm.nvim",
+		config = true
+	},
 	{ "mrjones2014/smart-splits.nvim" },
 	{ "mg979/vim-visual-multi" },
 };
