@@ -1,19 +1,18 @@
 return {
 	"hrsh7th/nvim-cmp",
 	dependencies = {
-		"L3MON4D3/LuaSnip",
-		"hrsh7th/cmp-path",
-		"hrsh7th/cmp-vsnip",
-		"hrsh7th/vim-vsnip",
-		"hrsh7th/cmp-buffer",
-		"hrsh7th/cmp-nvim-lsp",
-		"onsails/lspkind.nvim",
+		'hrsh7th/cmp-nvim-lsp',
+		'onsails/lspkind.nvim',
+		'hrsh7th/cmp-cmdline',
+		'hrsh7th/cmp-buffer',
+		'hrsh7th/cmp-path',
+		'hrsh7th/nvim-cmp',
+		'hrsh7th/cmp-vsnip',
+		'hrsh7th/vim-vsnip',
 	},
 
 	config = function()
 		local cmp = require("cmp");
-		local luasnip = require("luasnip");
-
 		local function close_fallback(fallback)
 			require("cmp").close();
 			fallback();
@@ -21,28 +20,23 @@ return {
 
 		cmp.setup({
 			window = {
-				completion = {
-					winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
-					col_offset = -3,
-					side_padding = 0,
-				},
+				completion = cmp.config.window.bordered({ winhighlight = 'Normal:CmpPmenu,CursorLine:PmenuSel,Search:None' }),
+				documentation = cmp.config.window.bordered(),
 			},
+
 
 			formatting = {
-				fields = { "kind", "abbr", "menu" },
+				fields = { 'kind', 'abbr', 'menu' },
 				format = function(entry, vim_item)
-					local kind = require("lspkind").cmp_format({ mode = "symbol_text", maxwidth = 50 })(entry, vim_item)
-					local strings = vim.split(kind.kind, "%s", { trimempty = true })
-					kind.kind = " " .. (strings[1] or "") .. " "
-					kind.menu = "    (" .. (strings[2] or "") .. ")"
+					local kind = require('lspkind').cmp_format({
+						mode = 'symbol_text',
+					})(entry, vim_item)
+
+					local strings = vim.split(kind.kind, '%s', { trimempty = true })
+					kind.kind = ' ' .. strings[1] .. ' '
+					kind.menu = '       ' .. strings[2] .. ' '
 
 					return kind
-				end,
-			},
-
-			snipet = {
-				expand = function(args)
-					luasnip.lsp_expand(args.body)
 				end,
 			},
 
@@ -58,12 +52,16 @@ return {
 			sources = cmp.config.sources({
 				{ name = "cmp-tw2css" },
 				{ name = "nvim_lsp" },
-				{ name = "luasnip" },
+				{ name = "vsnip" },
 				{ name = "buffer" },
 				{ name = "path" },
 			}),
-
 			preselect = "item",
+		});
+
+		cmp.setup.cmdline(':', {
+			mapping = cmp.mapping.preset.cmdline(),
+			sources = cmp.config.sources({ { name = 'cmdline' } }),
 		});
 	end
 }
