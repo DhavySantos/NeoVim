@@ -28,18 +28,6 @@ return {
 			function(server_name)
 				require("lspconfig")[server_name].setup({});
 			end,
-
-			["lua_ls"] = require("lspconfig").lua_ls.setup({
-				settings = {
-					Lua = {
-						diagnostics = {
-							globals = { 'vim' },
-							undefined_global = false,
-							missing_parameters = false,
-						}
-					}
-				},
-			}),
 		});
 	end
 }
