@@ -37,4 +37,5 @@ return {
 	},
 	{ "mrjones2014/smart-splits.nvim" },
 	{ "mg979/vim-visual-multi" },
+	{ "elkowar/yuck.vim" },
 };
