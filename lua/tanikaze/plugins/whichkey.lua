@@ -21,7 +21,7 @@ return {
 			{ "<C-s>",      "<cmd> SmartCursorMoveDown <cr>",                     desc = "Move Focus to Down Window",  mode = { "n", "t" } },
 			{ "<C-d>",      "<cmd> SmartCursorMoveRight <cr>",                    desc = "Move Focus to Right Window", mode = { "n", "t" } },
 
-			{ "<C-'>",      "<cmd> ToggleTerm size=15 direction=horizontal <cr>", desc = "Toggle Horizontal Terminal", mode = { "n", "t" } },
+			{ "<C-'>",      "<cmd> lua ToggleHorizontalTerm() <cr>", desc = "Toggle Horizontal Terminal", mode = { "n", "t" } },
 		});
 	end
 };
