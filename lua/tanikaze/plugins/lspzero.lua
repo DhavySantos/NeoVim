@@ -41,7 +41,7 @@ return {
 			}
 		});
 
-		require("mason").setup({});
+		require("mason").setup({ PATH = "append" });
 		require("mason-lspconfig").setup_handlers({
 			function(server_name)
 				require("lspconfig")[server_name].setup({});
