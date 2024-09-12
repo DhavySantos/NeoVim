@@ -4,11 +4,10 @@ return {
 
 	dependencies = {
 		-- Lsp Plugins --
-		{ "neovim/nvim-lspconfig" },
-		{ "williamboman/mason.nvim" },
 		{ "williamboman/mason-lspconfig.nvim" },
+		{ "williamboman/mason.nvim" },
+		{ "neovim/nvim-lspconfig" },
 		-- Cmp Plugins --
-		{ "roginfarrer/cmp-css-variables" },
 		{ "hrsh7th/cmp-nvim-lsp" },
 		{ "hrsh7th/nvim-cmp" },
 		{ "hrsh7th/cmp-path" },
@@ -21,6 +20,13 @@ return {
 		-- LSP SECTION --
 		local lsp_attach = function(_, bufnr)
 			local opts = { buffer = bufnr, silent = true, noremap = true };
+
+			vim.diagnostic.config({
+				virtual_text = true,
+				underline = true,
+				signs = false,
+			});
+
 			map("n", "K", vim.lsp.buf.hover, opts);
 
 			map("n", "<F2>", vim.lsp.buf.rename, opts);
@@ -42,10 +48,11 @@ return {
 		});
 
 		require("mason").setup({ PATH = "append" });
-		require("mason-lspconfig").setup_handlers({
-			function(server_name)
+		require("mason-lspconfig").setup({
+			ensure_installed = { "taplo", "rust_analyzer", "lua_ls" };
+			handlers = { function(server_name)
 				require("lspconfig")[server_name].setup({});
-			end,
+			end}
 		});
 
 		-- CMP SECTION --
@@ -86,7 +93,22 @@ return {
 
 			window = {
 				documentation = cmp.config.window.bordered(),
-				completion = cmp.config.window.bordered(),
+				completion = cmp.config.window.bordered({}),
+			},
+
+			formatting = {
+				fields = { "abbr", "kind", "menu" },
+				format = function(entry, vim_item)
+					vim_item.kind = string.format('%s %s', vim.g.kind_icons[vim_item.kind], vim_item.kind);
+					vim_item.menu = ({
+						buffer = "[Buffer]",
+						nvim_lsp = "[LSP]",
+						luasnip = "[LuaSnip]",
+						nvim_lua = "[Lua]",
+						latex_symbols = "[LaTeX]",
+					})[entry.source.name]
+					return vim_item
+				end,
 			},
 
 			mapping = cmp.mapping.preset.insert({
@@ -102,7 +124,6 @@ return {
 			}),
 
 			sources = cmp.config.sources({
-				{ name = "css-variables" },
 				{ name = "nvim_lsp" },
 				{ name = "luasnip" },
 				{ name = "path" },
