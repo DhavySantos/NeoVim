@@ -8,6 +8,7 @@ return {
 	keys = {
 		{ "<C-q>", "<cmd> BufferPrevious <cr>", mode = { "n" } },
 		{ "<C-x>", "<cmd> BufferClose <cr>",    mode = { "n" } },
+		{ "<C-X>", "<cmd> BufferClose! <cr>",   mode = { "n" } },
 		{ "<C-e>", "<cmd> BufferNext <cr>",     mode = { "n" } },
 	},
 
