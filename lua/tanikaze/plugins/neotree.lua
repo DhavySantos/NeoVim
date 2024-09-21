@@ -1,10 +1,18 @@
 return {
 	"nvim-neo-tree/neo-tree.nvim",
+	event = "UIEnter",
+
 	dependencies = {
 		"nvim-tree/nvim-web-devicons",
 		"nvim-lua/plenary.nvim",
 		"muniftanjim/nui.nvim",
 	},
+
+	keys = {
+		{ "<leader>e", "<cmd>Neotree focus <cr>", mode = { "n" } },
+		{ "<leader>E", "<cmd>Neotree close <cr>", mode = { "n" } },
+	},
+
 	opts = {
 		window = { width = 30 },
 		enable_git_status = false,
@@ -67,7 +75,5 @@ return {
 			-- Directories before files
 			return a.type < b.type
 		end
-
-
 	},
 }
