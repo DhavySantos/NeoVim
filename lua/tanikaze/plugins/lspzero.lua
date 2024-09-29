@@ -1,5 +1,6 @@
 return {
 	"VonHeikemen/lsp-zero.nvim",
+	event = "BufEnter",
 	branch = "v4.x",
 
 	dependencies = {
@@ -7,6 +8,7 @@ return {
 		{ "williamboman/mason-lspconfig.nvim" },
 		{ "williamboman/mason.nvim" },
 		{ "neovim/nvim-lspconfig" },
+
 		-- Cmp Plugins --
 		{ "hrsh7th/cmp-nvim-lsp" },
 		{ "hrsh7th/nvim-cmp" },
@@ -14,45 +16,30 @@ return {
 		{ "L3MON4D3/LuaSnip" },
 	},
 
+	keys = {
+		{ "K",     vim.lsp.buf.hover,          mode = "n", desc = "Lsp Hover" },
+		{ "<F2>",  vim.lsp.buf.rename,         mode = "n", desc = "Lsp Rename" },
+		{ "<F3>",  vim.lsp.buf.format,         mode = "n", desc = "Lsp Format" },
+		{ "<C-s>", "<cmd> silent! write <cr>", mode = "n", desc = "Write File" },
+		{ "<F4>",  vim.lsp.buf.code_action,    mode = "n", desc = "Lsp Code Action" },
+		{ "[d",    vim.diagnostic.goto_next,   mode = "n", desc = "Go to next Diagnostic" },
+		{ "]d",    vim.diagnostic.goto_prev,   mode = "n", desc = "Go to prev Diagnostic" },
+	},
+
 	config = function()
-		local map = vim.keymap.set;
-
 		-- LSP SECTION --
-		local lsp_attach = function(_, bufnr)
-			local opts = { buffer = bufnr, silent = true, noremap = true };
-
-			vim.diagnostic.config({
-				virtual_text = true,
-				underline = true,
-				signs = false,
-			});
-
-			map("n", "K", vim.lsp.buf.hover, opts);
-
-			map("n", "<F2>", vim.lsp.buf.rename, opts);
-			map("n", "<F3>", vim.lsp.buf.format, opts);
-			map("n", "<F4>", vim.lsp.buf.code_action, opts);
-
-			map("n", "[d", vim.diagnostic.goto_next, opts);
-			map("n", "]d", vim.diagnostic.goto_prev, opts);
-		end
-
 		require("lsp-zero").extend_lspconfig({
-			lsp_attach = lsp_attach,
-			sign_text = {
-				error = vim.g.signs.error,
-				warn = vim.g.signs.warn,
-				hint = vim.g.signs.hint,
-				info = vim.g.signs.info,
-			}
+			sign_text = vim.g.signs
 		});
 
-		require("mason").setup({ PATH = "append" });
+		require("mason").setup();
 		require("mason-lspconfig").setup({
-			ensure_installed = { "taplo", "rust_analyzer", "lua_ls" };
-			handlers = { function(server_name)
-				require("lspconfig")[server_name].setup({});
-			end}
+			ensure_installed = { "taplo", "yamlls", "rust_analyzer", "lua_ls" },
+			handlers = {
+				function(server) require("lspconfig")[server].setup({}); end,
+				["lua_ls"] = require("tanikaze.lspconfig.lua_ls"),
+				["rust_analyzer"] = function () end,
+			}
 		});
 
 		-- CMP SECTION --
@@ -93,7 +80,7 @@ return {
 
 			window = {
 				documentation = cmp.config.window.bordered(),
-				completion = cmp.config.window.bordered({}),
+				completion = cmp.config.window.bordered(),
 			},
 
 			formatting = {
@@ -128,6 +115,6 @@ return {
 				{ name = "luasnip" },
 				{ name = "path" },
 			}),
-		});
+		})
 	end
 }
