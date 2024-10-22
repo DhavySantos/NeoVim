@@ -29,14 +29,7 @@ return {
 		},
 
 		default_component_configs = {
-			diagnostics = {
-				symbols = {
-					error = vim.g.signs.error,
-					warn = vim.g.signs.warn,
-					hint = vim.g.signs.hint,
-					info = vim.g.signs.info,
-				},
-			},
+			diagnostics = { symbols = require("tanikaze.core.signs").diagnostics },
 			indent = {
 				expander_collapsed = '',
 				expander_expanded = '',
