@@ -7,77 +7,58 @@ return {
 		-- Lsp Plugins --
 		{ "williamboman/mason-lspconfig.nvim" },
 		{ "williamboman/mason.nvim" },
-		{ "neovim/nvim-lspconfig" },
+    { "neovim/nvim-lspconfig" },
 
-		-- Cmp Plugins --
-		{ "hrsh7th/cmp-nvim-lsp" },
-		{ "hrsh7th/nvim-cmp" },
-		{ "hrsh7th/cmp-path" },
-		{ "L3MON4D3/LuaSnip" },
+    -- Cmp Plugins --
+    { "hrsh7th/cmp-nvim-lsp" },
+    { "hrsh7th/cmp-nvim-lua" },
+    { "hrsh7th/cmp-buffer" },
+    { "hrsh7th/nvim-cmp" },
+    { "hrsh7th/cmp-path" },
 	},
 
 	keys = {
-		{ "K",     vim.lsp.buf.hover,          mode = "n", desc = "Lsp Hover" },
-		{ "<F2>",  vim.lsp.buf.rename,         mode = "n", desc = "Lsp Rename" },
-		{ "<F3>",  vim.lsp.buf.format,         mode = "n", desc = "Lsp Format" },
-		{ "<C-s>", "<cmd> silent! write <cr>", mode = "n", desc = "Write File" },
-		{ "<F4>",  vim.lsp.buf.code_action,    mode = "n", desc = "Lsp Code Action" },
-		{ "[d",    vim.diagnostic.goto_next,   mode = "n", desc = "Go to next Diagnostic" },
-		{ "]d",    vim.diagnostic.goto_prev,   mode = "n", desc = "Go to prev Diagnostic" },
+		{ "K",    vim.lsp.buf.hover,        mode = "n", desc = "Lsp Hover" },
+		{ "<F2>", vim.lsp.buf.rename,       mode = "n", desc = "Lsp Rename" },
+		{ "<F3>", vim.lsp.buf.format,       mode = "n", desc = "Lsp Format" },
+		{ "<F4>", vim.lsp.buf.code_action,  mode = "n", desc = "Lsp Code Action" },
+		{ "[d",   vim.diagnostic.goto_next, mode = "n", desc = "Go to next Diagnostic" },
+		{ "]d",   vim.diagnostic.goto_prev, mode = "n", desc = "Go to prev Diagnostic" },
 	},
+
 
 	config = function()
 		-- LSP SECTION --
-		require("lsp-zero").extend_lspconfig({
-			sign_text = vim.g.signs
-		});
+		local signs = require("tanikaze.core.signs");
 
-		require("mason").setup();
-		require("mason-lspconfig").setup({
-			ensure_installed = { "taplo", "yamlls", "rust_analyzer", "lua_ls" },
-			handlers = {
-				function(server) require("lspconfig")[server].setup({}); end,
-				["lua_ls"] = require("tanikaze.lspconfig.lua_ls"),
-				["rust_analyzer"] = function () end,
-			}
-		});
+		require("lsp-zero").extend_lspconfig({
+			sign_text = signs.diagnostics
+		})
+
+		require("mason").setup()
+		require("mason-lspconfig").setup_handlers({
+			function(server) require("lspconfig")[server].setup({}) end,
+
+			["lua_ls"] = function()
+				require("lspconfig").lua_ls.setup({
+					settings = { Lua = { diagnostics = { globals = { "vim" } } } }
+				})
+			end,
+
+			["rust_analyzer"] = function() end,
+		})
 
 		-- CMP SECTION --
-		local luasnip = require("luasnip");
-		local cmp = require("cmp");
+		local cmp = require("cmp")
 
 		local function close_fallback(fallback)
-			require("cmp").close();
-			fallback();
-		end
-
-		local function select_next_item(fallback)
 			if cmp.visible() then
-				cmp.select_next_item({ behavior = "select" })
-			elseif luasnip.expand_or_jumpable() then
-				luasnip.expand_or_jump()
-			else
-				fallback()
+				cmp.close()
 			end
-		end
-
-		local function select_prev_item(fallback)
-			if cmp.visible() then
-				cmp.select_prev_item({ behavior = "select" })
-			elseif luasnip.expand_or_jumpable(-1) then
-				luasnip.expand_or_jump(-1)
-			else
-				fallback()
-			end
+			fallback()
 		end
 
 		cmp.setup({
-			snippet = {
-				expand = function(args)
-					luasnip.lsp_expand(args.body);
-				end
-			},
-
 			window = {
 				documentation = cmp.config.window.bordered(),
 				completion = cmp.config.window.bordered(),
@@ -86,21 +67,15 @@ return {
 			formatting = {
 				fields = { "abbr", "kind", "menu" },
 				format = function(entry, vim_item)
-					vim_item.kind = string.format('%s %s', vim.g.kind_icons[vim_item.kind], vim_item.kind);
-					vim_item.menu = ({
-						buffer = "[Buffer]",
-						nvim_lsp = "[LSP]",
-						luasnip = "[LuaSnip]",
-						nvim_lua = "[Lua]",
-						latex_symbols = "[LaTeX]",
-					})[entry.source.name]
+					vim_item.kind = string.format("%s %s", signs.kind[vim_item.kind], vim_item.kind)
+					vim_item.menu = signs.sources[entry.source.name]
 					return vim_item
 				end,
 			},
 
 			mapping = cmp.mapping.preset.insert({
-				["<S-Tab>"] = cmp.mapping(select_prev_item, { "i", "s" }),
-				["<Tab>"] = cmp.mapping(select_next_item, { "i", "s" }),
+				["<S-Tab>"] = cmp.mapping.select_prev_item({ behavior = "select" }),
+				["<Tab>"] = cmp.mapping.select_next_item({ behavior = "select" }),
 
 				["<Down>"] = cmp.mapping(close_fallback),
 				["<Up>"] = cmp.mapping(close_fallback),
@@ -112,7 +87,8 @@ return {
 
 			sources = cmp.config.sources({
 				{ name = "nvim_lsp" },
-				{ name = "luasnip" },
+				{ name = "nvim_lua" },
+        { name = "buffer" },
 				{ name = "path" },
 			}),
 		})
