@@ -29,7 +29,7 @@
 
           cat > $out/bin/nvim <<EOF
           #!${pkgs.bash}/bin/bash
-          ${pkgs.neovim}/bin/nvim -u $out/config.lua
+          ${pkgs.neovim}/bin/nvim -u $out/config.lua "\$@"
           EOF
 
           chmod +x $out/bin/nvim
