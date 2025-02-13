@@ -26,16 +26,7 @@ return {
 				return a.type == "directory"
 			end
 
-			if a.type == b.type then
-				if not a.ext then return false end
-				if not b.ext then return true end
-
-				if a.ext ~= b.ext then
-					return a.ext < b.ext
-				end
-
-				return a.path < b.path
-			end
+			return ( a.ext or "~" ) .. a.path < ( b.ext or "~" ) .. b.path
 		end,
 
 		filesystem = {
