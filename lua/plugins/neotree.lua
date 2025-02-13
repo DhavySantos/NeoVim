@@ -21,6 +21,23 @@ return {
 		retain_hidden_root_indent = true,
 		hide_root_node = true,
 
+		sort_function = function(a, b)
+			if a.type ~= b.type then
+				return a.type == "directory"
+			end
+
+			if a.type == b.type then
+				if not a.ext then return false end
+				if not b.ext then return true end
+
+				if a.ext ~= b.ext then
+					return a.ext < b.ext
+				end
+
+				return a.path < b.path
+			end
+		end,
+
 		filesystem = {
 			filtered_items = {
 				hide_dotfiles = false,
