@@ -6,7 +6,7 @@ vim.opt.encoding = "utf-8"
 vim.opt.fileencoding = "utf-8"
 vim.opt.number = true      -- Show line numbers
 vim.opt.smartindent = true -- Smart indenting
-vim.opt.expandtab = false  -- Convert tabs to spaces
+vim.opt.expandtab = true   -- Convert tabs to spaces
 vim.opt.shiftwidth = 2     -- Number of spaces for autoindent
 vim.opt.tabstop = 2        -- Number of spaces for a tab
 vim.opt.wrap = false       -- Disable line wrap
@@ -39,45 +39,45 @@ vim.opt.swapfile = false      -- No swap files
 vim.opt.showmode = false      -- Don't show mode since it's in statusline
 
 vim.g.signs = {
-	diagnostics = {
-		error = "",
-		warn = "",
-		hint = "",
-		info = ""
-	},
+  diagnostics = {
+    error = "",
+    warn = "",
+    hint = "",
+    info = ""
+  },
 
-	kind = {
-		Text = "",
-		Method = "󰆧",
-		Function = "󰊕",
-		Constructor = "",
-		Field = "󰇽",
-		Variable = "󰂡",
-		Class = "󰠱",
-		Interface = "",
-		Module = "",
-		Property = "󰜢",
-		Unit = "",
-		Value = "󰎠",
-		Enum = "",
-		Keyword = "󰌋",
-		Snippet = "",
-		Color = "󰏘",
-		File = "󰈙",
-		Reference = "",
-		Folder = "󰉋",
-		EnumMember = "",
-		Constant = "󰏿",
-		Struct = "",
-		Event = "",
-		Operator = "󰆕",
-		TypeParameter = "󰅲",
-	},
+  kind = {
+    Text = "",
+    Method = "󰆧",
+    Function = "󰊕",
+    Constructor = "",
+    Field = "󰇽",
+    Variable = "󰂡",
+    Class = "󰠱",
+    Interface = "",
+    Module = "",
+    Property = "󰜢",
+    Unit = "",
+    Value = "󰎠",
+    Enum = "",
+    Keyword = "󰌋",
+    Snippet = "",
+    Color = "󰏘",
+    File = "󰈙",
+    Reference = "",
+    Folder = "󰉋",
+    EnumMember = "",
+    Constant = "󰏿",
+    Struct = "",
+    Event = "",
+    Operator = "󰆕",
+    TypeParameter = "󰅲",
+  },
 
-	sources = {
-		latex_symbols = "[LaTeX]",
-		buffer = "[Buffer]",
-		nvim_lsp = "[LSP]",
-		nvim_lua = "[Lua]",
-	}
+  sources = {
+    latex_symbols = "[LaTeX]",
+    buffer = "[Buffer]",
+    nvim_lsp = "[LSP]",
+    nvim_lua = "[Lua]",
+  }
 }
