@@ -42,9 +42,12 @@ return {
     -- this might cause issue if using nix on non nixos system
     -- use lspconfig when using nixos
     if os.getenv("NIX_PATH") then
+      require("lspconfig").ts_ls.setup({})
       require("lspconfig").taplo.setup({})
       require("lspconfig").nil_ls.setup({})
+      require("lspconfig").bashls.setup({})
       require("lspconfig").rust_analyzer.setup({})
+      require("lspconfig").clangd.setup({ cmd = { "clangd", "--compile-commands-dir=build" } })
       require("lspconfig").lua_ls.setup({ settings = { Lua = { diagnostics = { globals = { "vim" } } } } })
     end
 
