@@ -7,7 +7,6 @@ return {
 	{ "norcalli/nvim-colorizer.lua",         opts = "*" },
 
 	{ "echasnovski/mini.cursorword",         config = true },
-	{ "echasnovski/mini.animate",            config = true },
 	{ "utilyre/barbecue.nvim",               config = true },
 	{ "smiteshp/nvim-navic",                 config = true },
 	{ "folke/trouble.nvim",                  config = true },
