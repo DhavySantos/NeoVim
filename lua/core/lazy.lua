@@ -8,4 +8,8 @@ end
 
 vim.opt.rtp:prepend(lazypath);
 
-require("lazy").setup("plugins");
+require("lazy").setup({
+  lockfile = os.getenv("LAZY_LOCKFILE") or nil,
+  performance = { rtp = { reset = false } },
+  spec = "plugins",
+});
