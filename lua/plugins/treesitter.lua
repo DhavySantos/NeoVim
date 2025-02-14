@@ -7,6 +7,9 @@ return {
     auto_install = true,
     indent = { enable = true },
     highlight = { enable = true },
-    ensure_installed = { "rust", "lua", "markdown", "c", }
+    ensure_installed = {
+      "rust", "lua", "markdown",
+      "c", "nix", "toml", "yaml"
+    },
   },
 }
