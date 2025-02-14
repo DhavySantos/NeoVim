@@ -29,6 +29,9 @@ return {
       a.ext = a.ext ~= "" and a.ext or "~"
       b.ext = b.ext ~= "" and b.ext or "~"
 
+      a.ext = a.base and a.ext or "~"
+      b.ext = b.base and b.ext or "~"
+
       if a.ext ~= b.ext then
         return a.ext < b.ext
       end
