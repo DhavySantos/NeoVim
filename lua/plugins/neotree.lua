@@ -53,11 +53,8 @@ return {
         hide_by_pattern = { "*.lock" },
         hide_by_name = {
           "lazy-lock.json",
-          "node_modules",
-          ".direnv",
-          "target",
-          "build",
-          "dist",
+          ".gitignore",
+          ".envrc",
         },
       },
     },
