@@ -11,7 +11,6 @@ return {
   { "smiteshp/nvim-navic",                 config = true },
   { "folke/trouble.nvim",                  config = true },
   { "folke/neodev.nvim",                   config = true },
-  { "folke/trouble.nvim",                  config = true },
 
 
   { "terryma/vim-multiple-cursors" },
