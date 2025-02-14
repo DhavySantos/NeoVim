@@ -10,13 +10,19 @@
   flake-parts.lib.mkFlake { inherit inputs; } {
     systems = [ "x86_64-linux" "aarch64-linux" ];
     perSystem = { pkgs, system, ... } : {
+      devShells.default = pkgs.mkShell {
+        packages = (with pkgs; [
+          nil lua-language-server
+        ]);
+      };
+
       packages.default = pkgs.stdenv.mkDerivation {
 				src = self;
         name = "nvim";
         version = "0.0.1";
         phases = [ "installPhase" ];
         installPhase = ''
-          mkdir -p $out/{bin,lua}
+          mkdir -p $out/bin
 
           cp -r $src/{lua,lazy-lock.json} $out
 
