@@ -26,20 +26,12 @@ return {
         return a.type == "directory"
       end
 
-      a.ext = a.ext ~= "" and a.ext or "~"
-      b.ext = b.ext ~= "" and b.ext or "~"
+      local ext_a = a.base and (a.ext ~= "" and a.ext or "~") or "~"
+      local ext_b = b.base and (b.ext ~= "" and b.ext or "~") or "~"
 
-      a.ext = a.base and a.ext or "~"
-      b.ext = b.base and b.ext or "~"
-
-      if a.ext ~= b.ext then
-        return a.ext < b.ext
-      end
-
-      if a.ext == "rs" and b.ext == "rs" then
-        if a.name == "mod.rs" ~= b.name == "mod.rs" then
-          return not a.name == "mod.rs"
-        end
+      if ext_a ~= ext_b then return ext_a < ext_b end
+      if a.ext == "rs" and b.ext == "rs" and a.name ~= b.name then
+        return b.name == "mod.rs"
       end
 
       return a.path < b.path
