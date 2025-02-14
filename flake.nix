@@ -18,17 +18,18 @@
         installPhase = ''
           mkdir -p $out/{bin,lua}
 
-          cp -r $src/lua $out
+          cp -r $src/{lua,lazy-lock.json} $out
 
           cat > $out/config.lua <<EOF
           vim.opt.rtp:remove(vim.fn.stdpath("config") .. "/after")
           vim.opt.rtp:remove(vim.fn.stdpath("config"))
-          vim.opt.rtp:append("$out")
+          vim.opt.rtp:prepend("$out")
           require("core")
           EOF
 
           cat > $out/bin/nvim <<EOF
           #!${pkgs.bash}/bin/bash
+          export LAZY_LOCKFILE=$out/lazy-lock.json
           ${pkgs.neovim}/bin/nvim -u $out/config.lua "\$@"
           EOF
 
@@ -38,4 +39,3 @@
     };
   };
 }
-
