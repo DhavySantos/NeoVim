@@ -26,7 +26,20 @@ return {
         return a.type == "directory"
       end
 
-      return (a.ext or "~") .. a.path < (b.ext or "~") .. b.path
+      a.ext = a.ext ~= "" and a.ext or "~"
+      b.ext = b.ext ~= "" and b.ext or "~"
+
+      if a.ext ~= b.ext then
+        return a.ext < b.ext
+      end
+
+      if a.ext == "rs" and b.ext == "rs" then
+        if a.name == "mod.rs" ~= b.name == "mod.rs" then
+          return not a.name == "mod.rs"
+        end
+      end
+
+      return a.path < b.path
     end,
 
     filesystem = {
