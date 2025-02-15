@@ -4,7 +4,8 @@ return {
 
   opts = {
     auto_clean_after_session_restore = true,
-    suppressed_dirs = {
+    bypass_save_filetypes            = { "neo-tree" },
+    suppressed_dirs                  = {
       "~/Downloads",
       "~/Projects",
       "~/",
