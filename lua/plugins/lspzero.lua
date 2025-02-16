@@ -17,10 +17,12 @@ return {
   },
 
   keys = {
-    { "K",    vim.lsp.buf.hover,       mode = "n", desc = "Lsp Hover" },
-    { "<F2>", vim.lsp.buf.rename,      mode = "n", desc = "Lsp Rename" },
-    { "<F3>", vim.lsp.buf.format,      mode = "n", desc = "Lsp Format" },
-    { "<F4>", vim.lsp.buf.code_action, mode = "n", desc = "Lsp Code Action" },
+    { "K",    vim.lsp.buf.hover,        mode = "n", desc = "Lsp Hover" },
+    { "<F2>", vim.lsp.buf.rename,       mode = "n", desc = "Lsp Rename" },
+    { "<F3>", vim.lsp.buf.format,       mode = "n", desc = "Lsp Format" },
+    { "<F4>", vim.lsp.buf.code_action,  mode = "n", desc = "Lsp Code Action" },
+    { "[d",   vim.diagnostic.goto_next, mode = "n", desc = "Go to next diagnostic" },
+    { "]d",   vim.diagnostic.goto_prev, mode = "n", desc = "Go to prev diagnostic" },
   },
 
   config = function()
