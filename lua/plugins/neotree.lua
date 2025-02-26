@@ -30,8 +30,13 @@ return {
       local ext_b = b.base and (b.ext ~= "" and b.ext or "~") or "~"
 
       if ext_a ~= ext_b then return ext_a < ext_b end
+
       if a.ext == "rs" and b.ext == "rs" and a.name ~= b.name then
         return b.name == "mod.rs"
+      end
+
+      if a.ext == "nix" and b.ext == "nix" and a.name ~= b.name then
+        return b.name == "default.nix"
       end
 
       return a.path < b.path
