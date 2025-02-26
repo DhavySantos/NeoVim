@@ -45,6 +45,7 @@
         meta = with pkgs.lib; {
           description = "NeoVim Configuration";
           homepage = "https://github.com/dhavysantos/neovim";
+          platforms = platforms.all;
           license = licenses.mit;
         };
       };
