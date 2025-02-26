@@ -17,7 +17,7 @@
       };
 
       packages.default = pkgs.stdenv.mkDerivation {
-				src = self;
+        src = self;
         name = "nvim";
         version = "0.0.1";
         phases = [ "installPhase" ];
@@ -41,6 +41,12 @@
 
           chmod +x $out/bin/nvim
         '';
+
+        meta = with pkgs.lib; {
+          description = "NeoVim Configuration";
+          homepage = "https://github.com/dhavysantos/neovim";
+          license = licenses.mit;
+        };
       };
     };
   };
